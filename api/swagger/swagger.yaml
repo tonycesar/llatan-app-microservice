@@ -35,7 +35,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /creacliente:
-    x-swagger-router-controller: clienteCrear
+    x-swagger-router-controller: createCustomer
     post:
       description: create a new customer
       operationId: createCustomer
@@ -46,7 +46,7 @@ paths:
           schema:
             $ref: "#/definitions/Customer"
       responses:
-        "200":
+        "201":
           description: Success
           schema:
             $ref: "#/definitions/CustomerResponse"
