@@ -18,26 +18,52 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
+  /listclientes:
+    x-swagger-router-controller: clienteListar
     get:
-      description: Returns 'Hello' to the caller
-      # used as the method name of the controller
-      operationId: hello
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
+      description: get list customers
+      operationId: getCustomers
       responses:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
+            type: array
+            items:
+              $ref: '#/definitions/CustomerResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /creacliente:
+    x-swagger-router-controller: clienteCrear
+    post:
+      description: create a new customer
+      operationId: createCustomer
+      parameters:
+        - in: body
+          name: customer
+          description: The customer to create.
+          schema:
+            $ref: "#/definitions/Customer"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CustomerResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /kpideclientes:
+    x-swagger-router-controller: clienteEstadisticas
+    get:
+      description: get statistics of customers
+      operationId: getStatistics
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/StatisticsResponse"
         default:
           description: Error
           schema:
@@ -46,12 +72,52 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
+  Customer:
+    type: object
     properties:
-      message:
+      name:
         type: string
+        description: Name of client
+      lastname:
+        type: string
+        description: Lastname of client
+      birthDate:
+        type: string
+        description: Date of birth of client
+      age:
+        type: integer
+    required:
+      - name
+      - lastname
+      - birthDate
+  StatisticsResponse:
+    type: object
+    properties:
+      promedio:
+        type: number
+      desviacion:
+        type: number
+      
+  CustomerResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+        description: Name of client
+      lastname:
+        type: string
+        description: Lastname of client
+      birthDate:
+        type: string
+        description: Date of birth of client
+      age:
+        type: integer
+    required:
+      - name
+      - lastname
+      - birthDate    
   ErrorResponse:
     required:
       - message
