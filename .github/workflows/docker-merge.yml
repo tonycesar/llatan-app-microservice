@@ -1,7 +1,7 @@
 name: Deploy to ECR
 on:
   push:
-    branches: [ main ]
+    branches: [ main, "dev" ]
 
 jobs:
   build:
@@ -78,6 +78,8 @@ jobs:
         SSH_USER: ${{ secrets.USERNAME }}
         SSH_KEY: ${{ secrets.KEY }}
     - name: run ssh
+      env:
+        DOCKER_IMAGE_NAME: llatan-microservice
       run: |
           ssh staging docker stop "$DOCKER_IMAGE_NAME" || true
           ssh staging docker rm "$DOCKER_IMAGE_NAME" || true
