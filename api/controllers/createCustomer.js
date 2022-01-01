@@ -9,7 +9,7 @@ module.exports = {
 
 function createCustomer(req, res) {
     const { name, lastname, age, birthDate } =  req.body;
-    if (!name || !lastname || birthDate) {
+    if (!name || !lastname || !birthDate) {
         res.status(400).json({message: 'El nombre, apellido y fecha de nacimiento son requeridos'});
         return;
     }
