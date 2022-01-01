@@ -9,7 +9,7 @@ module.exports = {
 function createCustomer(req, res) {
     const { name, lastname, age, birthDate } =  req.body;
     saveCustomer({ name, lastname, age, birthDate }).then((id)=>{
-        res.json(id);
+        res.json({id, name, lastname, age, birthDate});
     }) 
 }
   
