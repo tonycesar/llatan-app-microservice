@@ -55,7 +55,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /kpideclientes:
-    x-swagger-router-controller: clienteEstadisticas
+    x-swagger-router-controller: customerStatistics
     get:
       description: get statistics of customers
       operationId: getStatistics
