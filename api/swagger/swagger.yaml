@@ -19,7 +19,7 @@ produces:
   - application/json
 paths:
   /listclientes:
-    x-swagger-router-controller: clienteListar
+    x-swagger-router-controller: listCustomer
     get:
       description: get list customers
       operationId: getCustomers

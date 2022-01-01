@@ -15,12 +15,20 @@ const generateUniqueId = () => Date.now().toString(36) + Math.random().toString(
 
 const saveCustomer = async ({ name, lastname, age, birthDate }) => {
     const id = generateUniqueId();
-    await customersDb.doc().set({ name, lastname, age, birthDate });
-    return {id,  name, lastname, age, birthDate };
+    await customersDb.doc(id).set({ name, lastname, age, birthDate });
+    return id;
+}
+
+const getAllCustomer = async () => {
+    const querySnapshot = await customersDb.get();
+    return querySnapshot.docs.map((doc) => {
+       return {...doc.data(), id: doc.id};
+    });
 }
 
 module.exports = {
-    saveCustomer
+    saveCustomer,
+    getAllCustomer
 }
 
 

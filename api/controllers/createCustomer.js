@@ -7,12 +7,9 @@ module.exports = {
 };
 
 function createCustomer(req, res) {
-    // variables defined in the Swagger document can be referenced using req.swagger.params.{parameter_name}
-
-    saveCustomer(req.body).then((saved)=>{
-        res.json(saved);
-    })
-    // this sends back a JSON response which is a single string
-    
-  }
+    const { name, lastname, age, birthDate } =  req.body;
+    saveCustomer({ name, lastname, age, birthDate }).then((id)=>{
+        res.json(id);
+    }) 
+}
   
