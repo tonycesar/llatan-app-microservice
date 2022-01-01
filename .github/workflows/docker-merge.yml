@@ -90,4 +90,4 @@ jobs:
           ssh staging sudo docker rm "$DOCKER_IMAGE_NAME" || true
           ssh staging sudo docker rmi -f $(ssh staging docker images | awk "{print \$3}")  || true
           ssh staging sudo docker pull "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          ssh staging sudo docker run  --name $DOCKER_IMAGE_NAME -p $PORT:8080 -p $PORT_SSL:8083 -d -v /etc/letsencrypt/live/llatan.cesarcalle.me:/mysite "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ssh staging sudo docker run  --name $DOCKER_IMAGE_NAME -p $PORT:8080 -p $PORT_SSL:8083 -d -v /etc/letsencrypt/live/llatan.cesarcalle.me/privkey.pem:/mysite/privkey.pem -v /etc/letsencrypt/live/llatan.cesarcalle.me/cert.pem:/mysite/cert.pem -v /etc/letsencrypt/live/llatan.cesarcalle.me/chain.pem:/mysite/chain.pem "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
