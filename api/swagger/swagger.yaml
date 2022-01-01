@@ -29,7 +29,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/CustomerResponse'
+              $ref: '#/definitions/CustomerListResponse'
         default:
           description: Error
           schema:
@@ -115,9 +115,35 @@ definitions:
       age:
         type: integer
     required:
+      - id
       - name
       - lastname
       - birthDate    
+  CustomerListResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+        description: Name of client
+      lastname:
+        type: string
+        description: Lastname of client
+      birthDate:
+        type: string
+        description: Date of birth of client
+      age:
+        type: integer
+      deathDate:
+        type: string
+        description: Date of death of client, probably
+    required:
+      - id
+      - name
+      - lastname
+      - birthDate 
+      - deathDate
   ErrorResponse:
     required:
       - message

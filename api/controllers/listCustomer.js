@@ -7,8 +7,14 @@ module.exports = {
 };
 
 function getCustomers(req, res) {
-    getAllCustomer().then((response)=>{
-        res.json(response);
+    getAllCustomer().then((allCustomer)=>{
+        const ageAVGToDeath = 72;
+        allCustomer.forEach(customer => {
+            const birthDate = new Date(customer.birthDate);
+            birthDate.setFullYear(birthDate.getFullYear() + 72)
+            customer.deathDate  = birthDate.getFullYear() + '-' + (birthDate.getMonth() + 1) + '-' + birthDate.getDate()
+        }) 
+        res.json(allCustomer);
     }) 
 }
   
