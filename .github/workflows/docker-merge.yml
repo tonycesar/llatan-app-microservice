@@ -80,9 +80,13 @@ jobs:
     - name: run ssh
       env:
         DOCKER_IMAGE_NAME: llatan-microservice
+        PORT: 8080
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: llatan-microservice
+        IMAGE_TAG: ${{ steps.vars.outputs.sha_short }}
       run: |
           ssh staging docker stop "$DOCKER_IMAGE_NAME" || true
           ssh staging docker rm "$DOCKER_IMAGE_NAME" || true
-          ssh staging docker rmi -f $(ssh staging docker images | grep "$DOCKER_IMAGE_NAME" | awk "{print \$3}")  || true
+          ssh staging docker rmi -f $(ssh staging docker images | awk "{print \$3}")  || true
           ssh staging docker pull "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ssh staging docker run  --name $DOCKER_IMAGE_NAME -p $PORT:8080 -d "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
