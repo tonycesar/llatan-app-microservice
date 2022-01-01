@@ -1,0 +1,126 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Hello World App
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /listclientes:
+    x-swagger-router-controller: listCustomer
+    get:
+      description: get list customers
+      operationId: getCustomers
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CustomerResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /creacliente:
+    x-swagger-router-controller: createCustomer
+    post:
+      description: create a new customer
+      operationId: createCustomer
+      parameters:
+        - in: body
+          name: customer
+          description: The customer to create.
+          schema:
+            $ref: "#/definitions/Customer"
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/CustomerResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /kpideclientes:
+    x-swagger-router-controller: clienteEstadisticas
+    get:
+      description: get statistics of customers
+      operationId: getStatistics
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/StatisticsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  Customer:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of client
+      lastname:
+        type: string
+        description: Lastname of client
+      birthDate:
+        type: string
+        description: Date of birth of client
+      age:
+        type: integer
+    required:
+      - name
+      - lastname
+      - birthDate
+  StatisticsResponse:
+    type: object
+    properties:
+      promedio:
+        type: number
+      desviacion:
+        type: number
+      
+  CustomerResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+        description: Name of client
+      lastname:
+        type: string
+        description: Lastname of client
+      birthDate:
+        type: string
+        description: Date of birth of client
+      age:
+        type: integer
+    required:
+      - name
+      - lastname
+      - birthDate    
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
