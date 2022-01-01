@@ -30,7 +30,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
     const ca = fs.readFileSync('/mysite/chain.pem', 'utf8');
     const credentials = { key: privateKey, cert: certificate, ca: ca };
     const httpsServer = https.createServer(credentials, app);
-    httpsServer.listen(portSSl, () => { console.log('HTTPS Server running on port 443'); });
+    httpsServer.listen(portSSL, () => { console.log('HTTPS Server running on port 443'); });
   }
 
 
